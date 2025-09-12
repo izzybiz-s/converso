@@ -21,8 +21,8 @@ const Profile = async () => {
 
   const companions = await getUserCompanions(user.id);
   const sessionHistory = await getUserSessions(user.id);
-  const bookmarkedCompanions = []; //await getBookmarkedCompanions(user.id);
-
+  const bookmarkedCompanions = await getBookmarkedCompanions(user.id);
+  console.log("bookmarked companions: ", bookmarkedCompanions);
   return (
     <main className="min-lg:w-3/4">
       <section className="flex justify-between gap-4 max-sm:flex-col items-center">

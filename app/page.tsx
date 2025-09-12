@@ -1,17 +1,27 @@
 import CompanionCard from "@/components/CompanionCard";
 import CompanionsList from "@/components/CompanionsList";
 import CTA from "@/components/Cta";
-import { recentSessions } from "@/constants";
 import {
   getAllCompanions,
+  getBookmarkedCompanions,
   getRecentSessions,
 } from "@/lib/actions/companion.actions";
 import { getSubjectColor } from "@/lib/utils";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 const Page = async () => {
-  const companions = await getAllCompanions({ limit: 3 });
-  const recentSessionsCompanions = await getRecentSessions(10);
+  const { userId } = await auth();
+  if (!userId) redirect("/sign-in");
 
+  const companions = await getAllCompanions({ limit: 3 });
+  const bookmarkedCompanions = await getBookmarkedCompanions(userId!);
+  console.log("bookmarkedCompanions: ", bookmarkedCompanions);
+  const recentSessionsCompanions = await getRecentSessions(10);
+  companions.forEach((c) => {
+    console.log(c);
+    c.bookmarked = bookmarkedCompanions.some((item) => item.id === c.id);
+  });
   return (
     <main>
       <h1>Popular Companions</h1>
