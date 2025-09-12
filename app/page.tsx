@@ -16,10 +16,8 @@ const Page = async () => {
 
   const companions = await getAllCompanions({ limit: 3 });
   const bookmarkedCompanions = await getBookmarkedCompanions(userId!);
-  console.log("bookmarkedCompanions: ", bookmarkedCompanions);
   const recentSessionsCompanions = await getRecentSessions(10);
   companions.forEach((c) => {
-    console.log(c);
     c.bookmarked = bookmarkedCompanions.some((item) => item.id === c.id);
   });
   return (
