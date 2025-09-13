@@ -94,7 +94,7 @@ const CompanionComponent = ({
       serverMessages: [],
     };
 
-    // @ts-expect-error
+    // @ts-expect-error 23423424
     vapi.start(configureAssistant(voice, style), assistantOverrides);
   };
 
