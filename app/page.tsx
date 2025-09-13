@@ -17,9 +17,13 @@ const Page = async () => {
   const companions = await getAllCompanions({ limit: 3 });
   const bookmarkedCompanions = await getBookmarkedCompanions(userId!);
   const recentSessionsCompanions = await getRecentSessions(10);
+  /* eslint-disable no-param-reassign */
   companions.forEach((c) => {
-    c.bookmarked = bookmarkedCompanions.some((item) => item.id === c.id);
+    c.bookmarked = (bookmarkedCompanions ?? []).some(
+      (item) => item.id === c.id
+    );
   });
+  /* eslint-enable no-param-reassign */
   return (
     <main>
       <h1>Popular Companions</h1>
